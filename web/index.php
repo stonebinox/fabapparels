@@ -16,9 +16,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
       'driver' => 'pdo_mysql',
-      'dbname' => 'heroku_d79883d9aa66a0a',
-      'user' => 'b46d8bdcf97357',
-      'password' => '8fdecc7f ',
+      'dbname' => 'heroku_e71d741b2d637b9',
+      'user' => 'ba568b6304e0b8',
+      'password' => '898d6344',
       'host'=> "us-cdbr-iron-east-05.cleardb.net",
     )
 ));
@@ -31,5 +31,6 @@ $app->before(function(Request $request) use($app){
 $app->get("/",function() use($app){
     $app['twig']->render("index.html.twig");
 });
+
 $app->run();
 ?>
