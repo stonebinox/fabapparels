@@ -29,8 +29,40 @@ $app->before(function(Request $request) use($app){
     $request->getSession()->start();
 });
 $app->get("/",function() use($app){
-    $app['twig']->render("index.html.twig");
+    return $app['twig']->render("index.html.twig");
 });
-
+$app->post("/login",function(Request $request){
+    if(($request->get("email"))&&($request->get("password")))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster;
+        $response=$user->authenticateUser($request->get("email"),$request->get("password"));
+        if($response=="AUTHENTICATE_USER")
+        {
+            return $app->redirect("/authenticate");
+        }
+        else
+        {
+            return $app->redirect("/?err=".$response);
+        }
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
+$app->get("/authentication",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster($app['session']->get("uid"));
+        $role=$user->getUserRole();
+        
+    }
+    else
+    {
+        return $app->redirect("/");
+    }
+});
 $app->run();
 ?>

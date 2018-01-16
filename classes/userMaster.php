@@ -83,7 +83,6 @@ class userMaster
     {
         $userEmail=addslashes(htmlentities($userEmail));
         $userID=$this->getUserIDFromEmail($userEmail);
-
         $app=$this->app;
         if(is_numeric($userID))
         {
@@ -163,6 +162,28 @@ class userMaster
             $um=$app['db']->executeUpdate($um);
             $app['session']->remove("uid");
             return "USER_LOGGED_OUT";
+        }
+        else
+        {
+            return "INVALID_USER_ID";
+        }
+    }
+    function getUserRole()
+    {
+        if($this->userValid)
+        {
+            $app=$this->app;
+            $userID=$this->user_id;
+            $um="SELECT user_role FROM user_master WHERE iduser_master='$userID'";
+            $um=$app['db']->fetchAssoc($um);
+            if(validate($um))
+            {
+                return $um['user_role'];
+            }
+            else
+            {
+                return "INVALID_USER_ID";
+            }
         }
         else
         {
