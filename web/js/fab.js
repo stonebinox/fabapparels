@@ -7,7 +7,7 @@ app.controller("login",function($scope,$http,$compile){
             var password=$("#password").val();
             if(password.length>=8){
                 $("#password").parent().removeClass("has-error");
-                
+                document.login.submit();
             }
             else{
                 $("#password").parent().addClass("has-error");
