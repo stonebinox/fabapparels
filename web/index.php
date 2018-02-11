@@ -51,18 +51,29 @@ $app->post("/login",function(Request $request){
         return "INVALID_PARAMETERS";
     }
 });
-$app->get("/authentication",function() use($app){
+$app->get("/authenticate",function() use($app){
     if($app['session']->get("uid"))
     {
         require("../classes/userMaster.php");
         $user=new userMaster($app['session']->get("uid"));
         $role=$user->getUserRole();
-        
+        if(is_numeric($role))
+        {
+            $app['session']->set("role",$role);
+            return $app->redirect("/dashboard");
+        }
+        else
+        {
+            return $app->redirect("/logout");
+        }
     }
     else
     {
         return $app->redirect("/");
     }
+});
+$app->get("/createaccount",function() use($app){
+    return $app['twig']->render("createaccount.html.twig");
 });
 $app->run();
 ?>
