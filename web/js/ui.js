@@ -82,3 +82,84 @@ function validate(str){
 		return false;
 	}
 }
+var getUrlParameter = function getUrlParameter(sParam) {
+	var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			sURLVariables = sPageURL.split('&'),
+			sParameterName,
+			i;
+
+	for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+
+			if (sParameterName[0] === sParam) {
+					return sParameterName[1] === undefined ? true : sParameterName[1];
+			}
+	}
+};
+function readParams(){
+	var err=getUrlParameter('err');
+	if(validate(err)){
+		switch(err){
+			case "INVALID_PARAMETERS":
+			default:
+			err='Something went wrong while processing your request.';
+			break;
+			case "NO_USERS_FOUND":
+			err='No more users found to email. You\'ve emailed everyone!';
+			break;
+			case "INVALID_USER_NAME":
+			err='Invalid user name. Please enter your full name and try again.';
+			break;
+			case "INVALID_USER_EMAIL":
+			err='Invalid email ID. Please enter a valid email ID and try again.';
+			break;
+			case "INVALID_PASSWORD":
+			err='Invalid password. Please ensure the password is at least 8 characters in length.';
+			break;
+			case "PASSWORD_MISMATCH":
+			err='Password mismatch. Please ensure the passwords match each other.';
+			break;
+			case "INVALID_USER_CREDENTIALS":
+			err='Incorrect credentials. Please verify the details and try again.';
+			break;
+		}
+		$("#message").html('<div class="alert alert-danger"><strong>Error</strong> '+err+'</div>');
+		setTimeout(function(){
+			$("#message").html('');
+		},15000);
+	}
+	var suc=getUrlParameter("suc");
+	if(validate(suc)){
+		switch(suc){
+			case "ACCOUNT_CREATED":
+			suc='Account created successfully. You may login to your account now.';
+			break;
+			case "ACCOUNT_VERIFIED":
+			suc='Your account was verified successfully. Login to continue.';
+			mover('login');
+			angular.element(document.getElementById("login")).scope().getUser();
+			break;
+			case "RESET_PASSWORD":
+			var id=getUrlParameter("id");
+			suc='';
+			$("#npassword2").parent().append('<input type="hidden" name="uid" id="uid" value="'+id+'">');
+			mover('confirmforgot');
+			break;
+			case "PASSWORD_RESET":
+			suc='Your password was reset successfully.';
+			mover('login');
+			break;
+			case "USERS_EMAILED":
+			suc='Users were emailed successfully! We\'ve shared your email ID with them so that they may contact you directly.';
+			localStorage.removeItem("subject");
+			localStorage.removeItem("body");
+			break;
+		}
+		if(validate(suc)){
+			$("#message").html('<div class="alert alert-success"><strong>Success</strong> '+suc+'</div>');
+			setTimeout(function(){
+				$("#message").html('');
+			},15000);
+		}
+	}
+}
