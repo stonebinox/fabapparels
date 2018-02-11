@@ -31,7 +31,7 @@ $app->before(function(Request $request) use($app){
 $app->get("/",function() use($app){
     return $app['twig']->render("index.html.twig");
 });
-$app->post("/login",function(Request $request){
+$app->post("/login",function(Request $request) use($app){
     if(($request->get("email"))&&($request->get("password")))
     {
         require("../classes/userMaster.php");
