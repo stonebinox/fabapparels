@@ -75,5 +75,23 @@ $app->get("/authenticate",function() use($app){
 $app->get("/createaccount",function() use($app){
     return $app['twig']->render("createaccount.html.twig");
 });
+$app->post("/register",function(Request $request) use($app){
+    if(($request->get("email"))&&($request->get("password"))&&($request->get("rpassword")))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster;
+        $response=$user->createAccount($request->get("name"),$request->get("email"),$request->get("password"),$request->get("rpassword"));
+        if($response=="ACCOUNT_CREATED"){
+            return $app->redirect("/?suc=".$response);
+        }
+        else{
+            return $app->redirect("/?err=".$response);
+        }
+    }
+    else
+    {
+        return $app->redirect("/?err=INVALID_PARAMETERS");
+    }
+});
 $app->run();
 ?>

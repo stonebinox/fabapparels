@@ -106,7 +106,7 @@ class userMaster
             return "INVALID_USER_CREDENTIALS";
         }
     }
-    function createAccount($userName,$userEmail,$userPassword,$userPassword2) //to create an account
+    function createAccount($userName,$userEmail,$userPassword,$userPassword2,$userRole=1) //to create an account, default userRole is 1 (shop clerk)
     {
         $app=$this->app;
         $userName=trim(addslashes(htmlentities($userName)));
@@ -122,10 +122,18 @@ class userMaster
                         $um=$app['db']->fetchAssoc($um);
                         if(($um=="")||($um==NULL))
                         {
-                            $hashPassword=md5($userPassword);
-                            $in="INSERT INTO user_master (timestamp,user_name,user_email,user_password) VALUES (NOW(),'$userName','$userEmail','$hashPassword')";
-                            $in=$app['db']->executeQuery($in);
-                            return "ACCOUNT_CREATED";
+                            $userRole=secure($userRole);
+                            if((validate($userRole))&&(is_numeric($userRole)))
+                            {
+                                $hashPassword=md5($userPassword);
+                                $in="INSERT INTO user_master (timestamp,user_name,user_email,user_password,user_role) VALUES (NOW(),'$userName','$userEmail','$hashPassword','$userRole')";
+                                $in=$app['db']->executeQuery($in);
+                                return "ACCOUNT_CREATED";
+                            }
+                            else
+                            {
+                                return "INVALID_USER_ROLE";
+                            }
                         }
                         else
                         {
