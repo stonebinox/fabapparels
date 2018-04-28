@@ -101,12 +101,12 @@ app.controller("dashboard",function($scope,$http,$compile){
             }
             else{
                 response=$.trim(response);
-                messageBox("problem","Something went wrong while loading your user details. Please try again later. This is the error we see: "+response);
+                messageBox("Problem","Something went wrong while loading your user details. Please try again later. This is the error we see: "+response);
             }
         },
         function error(response){
             console.log(response);
-            messageBox("problem","Something went wrong while loading your user details. Please try again later.");
+            messageBox("Problem","Something went wrong while loading your user details. Please try again later.");
         });
     };
 });

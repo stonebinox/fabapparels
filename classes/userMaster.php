@@ -198,5 +198,20 @@ class userMaster
             return "INVALID_USER_ID";
         }
     }
+    function getUser()
+    {
+        if($this->userValid)
+        {
+            $app=$this->app;
+            $userID=$this->user_id;
+            $um="SELECT * FROM user_master WHERE iduser_master='$userID'";
+            $um=$app['db']->fetchAssoc($um);
+            if(!empty($um))
+            {
+                return $um;
+            }
+        }
+        return "INVALID_USER_ID";
+    }
 }
 ?>

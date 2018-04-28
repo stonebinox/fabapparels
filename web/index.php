@@ -133,5 +133,19 @@ $app->get("/api/getUserType",function() use($app){
     }
     return "INVALID_PARAMETERS";
 });
+$app->get("/api/getUser",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster($app['session']->get("uid"));
+        $userData=$user->getUser();
+        if(is_array($userData))
+        {
+            return json_encode($userData);
+        }
+        return $userData;
+    }
+    return "INVALID_PARAMETERS";
+});
 $app->run();
 ?>
