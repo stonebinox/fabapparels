@@ -222,6 +222,7 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
     };
     $scope.displayItemData=function(){
-        $("#itemdata").html('<div class="well"></div>');
+        var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong></div><div class="panel-body"></div></div>';
+        $("#itemdata").html(text);
     };
 });
