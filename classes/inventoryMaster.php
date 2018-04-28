@@ -88,7 +88,7 @@ class inventoryMaster extends userMaster
     }
     function addInventory($name)
     {
-        $name=trim(secure($name));
+        $name=ucwords(trim(secure($name)));
         if(validate($name))
         {
             $app=$this->app;

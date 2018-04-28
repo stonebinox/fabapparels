@@ -144,6 +144,7 @@ app.controller("dashboard",function($scope,$http,$compile){
     $scope.loadAddInventoryView=function(){
         var text='<form name="addinv"><div class="form-group"><label for="invname">Inventory name</label><input type="text" name="invname" id="invname" class="form-control" placeholder="Enter a name for this inventory type" required></div><button type="button" class="btn btn-primary" ng-click="addInventoryType()">Add</button></form>';
         messageBox("Add Inventory Type",text);
+        $compile("#myModal")($scope);
     };
     $scope.addInventoryType=function(){
         var name=$.trim($("#invname").val());
