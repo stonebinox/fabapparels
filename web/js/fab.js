@@ -141,4 +141,13 @@ app.controller("dashboard",function($scope,$http,$compile){
             console.log($scope.inventoryArray);
         }
     };
+    $scope.loadAddInventoryView=function(){
+        var text='<form name="addinv"><div class="form-group"><label for="invname">Inventory name</label><input type="text" name="invname" id="invname" class="form-control" placeholder="Enter a name for this inventory type" required></div><button type="button" class="btn btn-primary">Add</button></form>';
+        messageBox("Add Inventory Type",text);
+    };
+    $scope.logout=function(){
+        if(confirm("Are you sure you want to logout?")){
+            window.location="logout";
+        }
+    };
 });
