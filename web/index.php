@@ -12,6 +12,14 @@ function secure($string)
 {
     return addslashes(htmlentities($string));
 }
+function validate($obj)
+{
+    if(($obj!="")&&($obj!=NULL))
+    {
+        return true;
+    }
+    return false;
+}
 
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => 'php://stderr',
