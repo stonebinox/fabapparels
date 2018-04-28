@@ -7,6 +7,12 @@ require __DIR__.'/../config/prod.php';
 require __DIR__.'/../src/controllers.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+function secure($string)
+{
+    return addslashes(htmlentities($string));
+}
+
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => 'php://stderr',
 ));
