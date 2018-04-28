@@ -169,5 +169,21 @@ $app->get("/api/addInventoryType",function(Request $request) use($app){
     }
     return "INVALID_PARAMETERS";
 });
+$app->get("/api/getItems/{inventoryID}",function($inventoryID) use($app){
+    if(($app['session']->get("uid"))&&(!empty($inventoryID)))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/inventoryMaster.php");
+        require("../classes/itemMaster.php");
+        $item=new itemMaster;
+        $response=$item->getItems($inventoryID);
+        if(is_array($response))
+        {
+            return json_encode($response);
+        }
+        return $response;
+    }
+    return "INVALID_PARAMETERS";
+});
 $app->run();
 ?>

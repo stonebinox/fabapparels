@@ -200,6 +200,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                 response=response.data;
                 if(typeof(response)=="object"){
                     $scope.itemArray=response;
+                    $scope.displayItemData();
                 }
                 else{
                     response=$.trim(response);
@@ -219,5 +220,8 @@ app.controller("dashboard",function($scope,$http,$compile){
                 messageBox("Problem","Something went wrong while getting items.");
             });
         }
+    };
+    $scope.displayItemData=function(){
+        $("#itemdata").html('<div class="well"></div>');
     };
 });
