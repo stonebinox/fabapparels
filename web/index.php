@@ -114,6 +114,15 @@ $app->get("/dashboard",function() use($app){
     }
     return $app->redirect("/logout");
 });
+$app->get("/logout",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster($app['session']->get("uid"));
+        $response=$user->logout();
+    }
+    return $app->redirect("/");
+});
 $app->get("/api/getUserType",function() use($app){
     if($app['session']->get("uid"))
     {
