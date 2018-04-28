@@ -158,5 +158,16 @@ $app->get("/api/getInventoryTypes",function() use($app){
     }
     return $allInv;
 });
+$app->get("/api/addInventoryType",function(Request $request){
+    if(($app['session']->get("uid"))&&($request->get("invname")))
+    {   
+        require("../classes/userMaster.php");
+        require("../classes/inventoryMaster.php");
+        $inv=new inventoryMaster;
+        $response=$inv->addInventory($request->get("invname"));
+        return $response;
+    }
+    return "INVALID_PARAMETERS";
+});
 $app->run();
 ?>

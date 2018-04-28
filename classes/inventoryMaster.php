@@ -86,5 +86,23 @@ class inventoryMaster extends userMaster
         }
         return $invArray;
     }
+    function addInventory($name)
+    {
+        $name=trim(secure($name));
+        if(validate($name))
+        {
+            $app=$this->app;
+            $im="SELECT idinventory_master FROM inventory_master WHERE stat='1' AND inventory_name='$name'";
+            $im=$app['db']->fetchAssoc($im);
+            if(empty($im))
+            {  
+                $in="INSERT INTO inventory_master (timestamp,inventory_name) VALUES (NOW(),'$name')";
+                $in=$app['db']->executeQuery($in);
+                return "INVENTORY_ADDED";
+            }
+            return "INVENTORY_NAME_ALREADY_EXISTS";
+        }
+        return "INVALID_INVENTORY_NAME";
+    }
 }
 ?>

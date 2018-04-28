@@ -142,8 +142,35 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
     };
     $scope.loadAddInventoryView=function(){
-        var text='<form name="addinv"><div class="form-group"><label for="invname">Inventory name</label><input type="text" name="invname" id="invname" class="form-control" placeholder="Enter a name for this inventory type" required></div><button type="button" class="btn btn-primary">Add</button></form>';
+        var text='<form name="addinv"><div class="form-group"><label for="invname">Inventory name</label><input type="text" name="invname" id="invname" class="form-control" placeholder="Enter a name for this inventory type" required></div><button type="button" class="btn btn-primary" ng-click="addInventoryType()">Add</button></form>';
         messageBox("Add Inventory Type",text);
+    };
+    $scope.addInventoryType=function(){
+        var name=$.trim($("#invname").val());
+        if(validate(name)){
+            $("#invname").parent().removeClass("has-error");
+            $http.get("api/addInventoryType?invname="+name)
+            .then(function success(response){
+                response=$.trim(response.data);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while trying to add this inventory type. This is the error we see: "+response);
+                    break;
+                    case "INVENTORY_ADDED":
+                    messageBox("Inventory Type Added","The inventory type <strong>"+name+"</strong> was added successfully.");
+                    $scope.getInventoryTypes();
+                    break;
+                }
+            },
+            function error(response){
+                console.log(response);
+                messageBox("Problem","Something went wrong while trying to add this inventory type.");
+            });
+        }
+        else{
+            $("#invname").parent().addClass("has-error");
+        }
     };
     $scope.logout=function(){
         if(confirm("Are you sure you want to logout?")){
