@@ -126,7 +126,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                     messageBox("Problem","Something went wrong while trying to load the inventory types. Please try again later. This is the error we see: "+response);
                     break;
                     case "NO_INVENTORY_TYPES_FOUND":
-                    $("#invtypes").html('<div class="well-sm">No inventory types found</div>');
+                    $("#invtypes").html('<div class="well">No inventory types found</div>');
                     break;
                 }
             }
