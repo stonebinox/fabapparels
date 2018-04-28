@@ -210,7 +210,8 @@ app.controller("dashboard",function($scope,$http,$compile){
                         messageBox("Problem","Something went wrong while getting items. This is the error we see: "+response);
                         break;
                         case "NO_ITEMS_FOUND":
-                        $("#itemdata").html('<div class="well">No items added.</div>');
+                        $("#itemdata").html('<div class="well"><button type="button" class="btn btn-primary" ng-click="addItemsView()">Add items</button><br>No items added.</div>');
+                        $compile("#itemdata")($scope);
                         break;
                     }
                 }
@@ -224,5 +225,14 @@ app.controller("dashboard",function($scope,$http,$compile){
     $scope.displayItemData=function(){
         var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong></div><div class="panel-body"></div></div>';
         $("#itemdata").html(text);
+    };
+    $scope.addItemsView=function(){
+        if(validate($scope.inventory_id)){
+            var pos=null;
+            for(var i=0;i<$scope.inventoryArray.length;i++){
+                var inv=$scope.inventoryArray[i];
+            }
+            var text='<form name="items"><div class="form-group"><label for="itemname">Item name</label><input type="text" name="itemname" id="itemname" class="form-control" placeholder="Enter a valid name" required></div></form>';
+        }
     };
 });
