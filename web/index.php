@@ -107,5 +107,22 @@ $app->post("/register",function(Request $request) use($app){
         return $app->redirect("/?err=INVALID_PARAMETERS");
     }
 });
+$app->get("/dashboard",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        return $app['twig']->render("dashboard.html.twig");
+    }
+    return $app->redirect("/logout");
+});
+$app->get("/api/getUserType",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster($app['session']->get("uid"));
+        $response=$user->getUserRole();
+        return $response;
+    }
+    return "INVALID_PARAMETERS";
+});
 $app->run();
 ?>

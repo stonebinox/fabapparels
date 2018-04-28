@@ -50,3 +50,43 @@ app.controller("createaccount",function($scope,$http,$compile){
         }
     };
 });
+app.controller("dashboard",function($scope,$http,$compile){
+    $scope.userType=null;
+    $scope.getUserType=function(){
+        $http.get("/api/getUserType")
+        .then(function success(response){
+            response=$.trim(response.data);
+            switch(response){
+                case "INVALID_PARAMETERS":
+                default:
+                if(!isNaN(response)){
+                    $scope.userType=parseInt(response);
+                    $scope.loadLayout();
+                }
+                else{
+                    console.log(response);
+                    messageBox("Problem","Something went wrong while loading user type.");
+                    window.location='logout';
+                }
+                break;
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("Problem","Something went wrong while loading user type. Please refresh the page and try again.");
+        });
+    };
+    $scope.loadLayout=function(){
+        if(validate($scope.userType)){
+            if($scope.userType==1){
+                $scope.loadInventoryDashboard();
+            }
+        }
+        else{
+            window.location='logout';
+        }
+    };
+    $scope.loadInventoryDashboard=function(){
+        console.log("here");
+    };
+});

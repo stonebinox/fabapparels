@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<body ng-app="fab" onload="readParams()">
+    <div class="container" ng-controller="dashboard" ng-init="getUserType()">
+        <br>
+        <br>
+        <img src="images/fab_logo.JPG" class="img-responsive" style="width:200px;margin:0 auto;">
+        <hr>
+        <div id="dashboard"></div>
+    </div>
+    <div class="container-fluid">
+        <div id="myModal" class="modal fade" role="dialog"></div>
+    </div>
+</body>
+{% endblock %}
