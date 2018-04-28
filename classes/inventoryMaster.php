@@ -64,5 +64,27 @@ class inventoryMaster extends userMaster
             return "INVALID_INVENTORY_ID";
         }
     }
+    function getAllInventory()
+    {
+        $app=$this->app;
+        $im="SELECT idinventory_master FROM inventory_master WHERE stat='1' ORDER BY inventory_name ASC";
+        $im=$app['db']->fetchAll($im);
+        $invArray=[];
+        foreach($im as $inventoryRow)
+        {
+            $invID=$inventoryRow['idinventory_master'];
+            $this->__construct($invID);
+            $inventory=$this->getInventory();
+            if(is_array($inventory))
+            {
+                array_push($invArray,$inventory);
+            }
+        }
+        if(empty($invArray))
+        {
+            return "NO_INVENTORY_TYPES_FOUND";
+        }
+        return $invArray;
+    }
 }
 ?>

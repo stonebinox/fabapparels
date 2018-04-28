@@ -147,5 +147,16 @@ $app->get("/api/getUser",function() use($app){
     }
     return "INVALID_PARAMETERS";
 });
+$app->get("/api/getInventoryTypes",function() use($app){
+    require("../classes/userMaster.php");
+    require("../classes/inventoryMaster.php");
+    $inv=new inventoryMaster;
+    $allInv=$inv->getAllInventory();
+    if(is_array($allInv))
+    {
+        return json_encode($allInv);
+    }
+    return $allInv;
+});
 $app->run();
 ?>

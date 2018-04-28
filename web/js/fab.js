@@ -53,6 +53,7 @@ app.controller("createaccount",function($scope,$http,$compile){
 app.controller("dashboard",function($scope,$http,$compile){
     $scope.userType=null;
     $scope.user=null;
+    $scope.inventoryArray=[];
     $scope.getUserType=function(){
         $http.get("/api/getUserType")
         .then(function success(response){
@@ -108,5 +109,36 @@ app.controller("dashboard",function($scope,$http,$compile){
             console.log(response);
             messageBox("Problem","Something went wrong while loading your user details. Please try again later.");
         });
+    };
+    $scope.getInventoryTypes=function(){
+        $http.get("api/getInventoryTypes")
+        .then(function success(response){
+            response=response.data;
+            if(typeof(response)=="object"){
+                $scope.inventoryArray=response;
+                $scope.displayInventoryTypes();
+            }
+            else{
+                response=$.trim(response);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while trying to load the inventory types. Please try again later. This is the error we see: "+response);
+                    break;
+                    case "NO_INVENTORY_TYPES_FOUND":
+                    $("#invtypes").html('<div class="well-sm">No inventory types found</div>');
+                    break;
+                }
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("Problem","Something went wrong while trying to load the inventory types. Please try again later.");
+        });
+    };
+    $scope.displayInventoryTypes=function(){
+        if($scope.inventoryArray.length>0){
+            console.log($scope.inventoryArray);
+        }
     };
 });
