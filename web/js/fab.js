@@ -54,6 +54,8 @@ app.controller("dashboard",function($scope,$http,$compile){
     $scope.userType=null;
     $scope.user=null;
     $scope.inventoryArray=[];
+    $scope.inventory_id=null;
+    $scope.itemArray=[];
     $scope.getUserType=function(){
         $http.get("/api/getUserType")
         .then(function success(response){
@@ -143,10 +145,12 @@ app.controller("dashboard",function($scope,$http,$compile){
                 var inv=$scope.inventoryArray[i];
                 var invID=inv.idinventory_master;
                 var invName=inv.inventory_name;
-                text+='<a href="javascript:void(0)" class="list-group-item">'+invName+'</a>';
+                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'</a>';
             }
             text+='</div>';
             $("#invtypes").html(text);
+            $compile("#invtypes")($scope);
+            $scope.getInventoryItems($scope.inventoryArray[0].idinventory_master);
         }
     };
     $scope.loadAddInventoryView=function(){
@@ -184,6 +188,36 @@ app.controller("dashboard",function($scope,$http,$compile){
     $scope.logout=function(){
         if(confirm("Are you sure you want to logout?")){
             window.location="logout";
+        }
+    };
+    $scope.getInventoryItems=function(inventoryID){
+        if(validate(inventoryID)){
+            $scope.inventory_id=inventoryID;
+            $("#invtypes").find("a").removeClass("active");
+            $("#"+inventoryID+"inv").addClass("active");
+            $http.get("api/getItems/"+$scope.inventory_id)
+            .then(function success(response){
+                response=response.data;
+                if(typeof(response)=="object"){
+                    $scope.itemArray=response;
+                }
+                else{
+                    response=$.trim(response);
+                    switch(response){
+                        case "INVALID_PARAMETERS":
+                        default:
+                        messageBox("Problem","Something went wrong while getting items. This is the error we see: "+response);
+                        break;
+                        case "NO_ITEMS_FOUND":
+                        console.log("nothing here");
+                        break;
+                    }
+                }
+            },
+            function error(response){
+                console.log(response);
+                messageBox("Problem","Something went wrong while getting items.");
+            });
         }
     };
 });
