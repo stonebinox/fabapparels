@@ -210,7 +210,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                         messageBox("Problem","Something went wrong while getting items. This is the error we see: "+response);
                         break;
                         case "NO_ITEMS_FOUND":
-                        console.log("nothing here");
+                        $("#itemdata").html('<div class="well">No items added.</div>');
                         break;
                     }
                 }
