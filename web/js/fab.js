@@ -87,6 +87,8 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
     };
     $scope.loadInventoryDashboard=function(){
-        console.log("here");
+        $("#dashboard").load("views/dashboard.html",function(){
+            console.log("here");
+        });
     };
 });
