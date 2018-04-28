@@ -138,7 +138,15 @@ app.controller("dashboard",function($scope,$http,$compile){
     };
     $scope.displayInventoryTypes=function(){
         if($scope.inventoryArray.length>0){
-            console.log($scope.inventoryArray);
+            var text='<div class="list-group">';
+            for(var i=0;i<$scope.inventoryArray.length;i++){
+                var inv=$scope.inventoryArray[i];
+                var invID=inv.idinventory_master;
+                var invName=inv.inventory_name;
+                text+='<a href="javascript:void(0)" class="list-group-item">'+invName+'</a>';
+            }
+            text+='</div>';
+            $("#invtypes").html(text);
         }
     };
     $scope.loadAddInventoryView=function(){
