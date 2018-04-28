@@ -158,7 +158,7 @@ $app->get("/api/getInventoryTypes",function() use($app){
     }
     return $allInv;
 });
-$app->get("/api/addInventoryType",function(Request $request){
+$app->get("/api/addInventoryType",function(Request $request) use($app){
     if(($app['session']->get("uid"))&&($request->get("invname")))
     {   
         require("../classes/userMaster.php");
