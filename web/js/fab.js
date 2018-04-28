@@ -52,6 +52,7 @@ app.controller("createaccount",function($scope,$http,$compile){
 });
 app.controller("dashboard",function($scope,$http,$compile){
     $scope.userType=null;
+    $scope.user=null;
     $scope.getUserType=function(){
         $http.get("/api/getUserType")
         .then(function success(response){
@@ -88,7 +89,24 @@ app.controller("dashboard",function($scope,$http,$compile){
     };
     $scope.loadInventoryDashboard=function(){
         $("#dashboard").load("views/dashboard.html",function(){
-            console.log("here");
+            $compile("#dashboard")($scope);
+        });
+    };
+    $scope.getUser=function(){
+        $http.get("api/getUser")
+        .then(function success(response){
+            response=response.data;
+            if(typeof(response)=="object"){
+                $scope.user=response;
+            }
+            else{
+                response=$.trim(response);
+                messageBox("problem","Something went wrong while loading your user details. Please try again later. This is the error we see: "+response);
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("problem","Something went wrong while loading your user details. Please try again later.");
         });
     };
 });
