@@ -210,7 +210,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                         messageBox("Problem","Something went wrong while getting items. This is the error we see: "+response);
                         break;
                         case "NO_ITEMS_FOUND":
-                        $("#itemdata").html('<div class="well"><button type="button" class="btn btn-primary" ng-click="addItemsView()">Add items</button><br>No items added.</div>');
+                        $("#itemdata").html('<div class="well"><button type="button" class="btn btn-primary" ng-click="addItemsView()">Add items</button><br><hr>No items added.</div>');
                         $compile("#itemdata")($scope);
                         break;
                     }
@@ -231,8 +231,15 @@ app.controller("dashboard",function($scope,$http,$compile){
             var pos=null;
             for(var i=0;i<$scope.inventoryArray.length;i++){
                 var inv=$scope.inventoryArray[i];
+                if(inv.idinventory_master==$scope.inventory_id){
+                    pos=i;
+                    break;
+                }
             }
-            var text='<form name="items"><div class="form-group"><label for="itemname">Item name</label><input type="text" name="itemname" id="itemname" class="form-control" placeholder="Enter a valid name" required></div></form>';
+            var inventory=$scope.inventoryArray[pos];
+            var invName=inventory.inventory_name;
+            var text='<form name="items"><div class="form-group"><label for="itemname">Item name</label><input type="text" name="itemname" id="itemname" class="form-control" placeholder="Enter a valid name" required value="'+invName+'"></div><div class="form-group"><label for="itemprice">Price</label><input type="number" class="form-control" name="itemprice" id="itemprice" required placeholder="0"></div></form>';
+            messageBox("Add Items",text);
         }
     };
 });
