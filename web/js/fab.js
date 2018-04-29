@@ -238,8 +238,8 @@ app.controller("dashboard",function($scope,$http,$compile){
             }
             var inventory=$scope.inventoryArray[pos];
             var invName=inventory.inventory_name;
-            var text='<form name="items"><div class="form-group"><label for="itemname">Item name</label><input type="text" name="itemname" id="itemname" class="form-control" placeholder="Enter a valid name" required value="'+invName+'"></div><div class="form-group"><label for="itemprice">Price</label><input type="number" class="form-control" name="itemprice" id="itemprice" required placeholder="0"></div></form>';
-            messageBox("Add Items",text);
+            var text='<form name="items"><div class="form-group"><label for="itemname">Item name</label><input type="text" name="itemname" id="itemname" class="form-control" placeholder="Enter a valid name" required value="'+invName+'"></div><div class="form-group"><label for="itemprice">Price</label><input type="number" class="form-control" name="itemprice" id="itemprice" required placeholder="0"></div><div class="form-group"><label for="itemquantity">Quantity</label><input type="number" class="form-control" name="itemquantity" id="itemquantity" placeholder=0 required></div><div class="form-group"><label for="discount">Discount</label><input type="number" class="form-control" name="discount" id="discount" placeholder="0%"></div><button type="button" class="btn btn-primary">Add Item(s)</button></form>';
+            messageBox("Add Items To "+invName,text);
         }
     };
 });
