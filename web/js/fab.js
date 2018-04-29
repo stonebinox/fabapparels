@@ -238,8 +238,71 @@ app.controller("dashboard",function($scope,$http,$compile){
             }
             var inventory=$scope.inventoryArray[pos];
             var invName=inventory.inventory_name;
-            var text='<form name="items"><div class="form-group"><label for="itemname">Item name</label><input type="text" name="itemname" id="itemname" class="form-control" placeholder="Enter a valid name" required value="'+invName+'"></div><div class="form-group"><label for="itemprice">Price</label><input type="number" class="form-control" name="itemprice" id="itemprice" required placeholder="0"></div><div class="form-group"><label for="itemquantity">Quantity</label><input type="number" class="form-control" name="itemquantity" id="itemquantity" placeholder=0 required></div><div class="form-group"><label for="discount">Discount</label><input type="number" class="form-control" name="discount" id="discount" placeholder="0%"></div><button type="button" class="btn btn-primary">Add Item(s)</button></form>';
+            var text='<form name="items"><div class="form-group"><label for="itemname">Item name</label><input type="text" name="itemname" id="itemname" class="form-control" placeholder="Enter a valid name" required value="'+invName+'"></div><div class="form-group"><label for="itemprice">Price</label><input type="number" class="form-control" name="itemprice" id="itemprice" required placeholder="0"></div><div class="form-group"><label for="itemquantity">Quantity</label><input type="number" class="form-control" name="itemquantity" id="itemquantity" placeholder=0 required></div><div class="form-group"><label for="discount">Discount</label><input type="number" class="form-control" name="discount" id="discount" placeholder="0%" value=0></div><button type="button" class="btn btn-primary" ng-click="addItems()">Add Item(s)</button></form>';
             messageBox("Add Items To "+invName,text);
+            $compile("#myModal")($scope);
+        }
+    };
+    $scope.addItems=function(){
+        var itemname=$.trim($("#itemname").val());
+        if(validate(itemname)){
+            $("#itemname").parent().removeClass("has-error");
+            var itemPrice=$.trim($("#itemprice").val());
+            if((validate(itemPrice))&&(!isNaN(itemPrice))&&(itemPrice>=0)){
+                $("#itemprice").parent().removeClass("has-error");
+                var itemQuantity=$.trim($("#itemquantity").val());
+                if((validate(itemQuantity))&&(!isNaN(itemQuantity))&&(itemQuantity>0)){
+                    $("#itemquantity").parent().removeClass("has-error");
+                    var discount=$.trim($("#discount").val());
+                    if((validate(discount))&&(!isNaN(discount))&&(discount>=0)){
+                        $("#discount").parent().removeClass("has-error");
+                        $.ajax({
+                            url: "api/addItems",
+                            method: "post",
+                            data:{
+                                name: itemname,
+                                price: itemPrice,
+                                quantity: itemQuantity,
+                                discount: discount,
+                                inventory_id: $scope.inventory_id
+                            },
+                            error: function(err){
+                                console.log(err);
+                                messageBox("Problem","Something went wrong while adding items. Please try again later.");
+                            },
+                            success: function(responseText){
+                                responseText=$.trim(responseText);
+                                if((validate(responseText))&&(responseText!="INVALID_PARAMETERS")){
+                                    switch(responseText){
+                                        default:
+                                        messageBox("Problem","Something went wrong while adding items. Please try again later. This is the error we see: "+responseText);
+                                        break;
+                                        case "ITEMS_ADDED":
+                                        messageBox("Items Added","The items were added successfully!");
+                                        //refresh items
+                                        break;
+                                    }
+                                }
+                                else{
+                                    messageBox("Problem","Something went wrong while adding items. Please try again later.");
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        $("#discount").parent().addClass("has-error");
+                    }
+                }
+                else{
+                    $("#itemquantity").parent().addClass("has-error");
+                }
+            }
+            else{
+                $("#itemprice").parent().addClass("has-error");
+            }
+        }
+        else{
+            $("#itemname").parent().addClass("has-error");
         }
     };
 });
