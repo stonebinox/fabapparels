@@ -198,6 +198,7 @@ app.controller("dashboard",function($scope,$http,$compile){
             $http.get("api/getItems/"+$scope.inventory_id)
             .then(function success(response){
                 response=response.data;
+                console.log(response);
                 if(typeof(response)=="object"){
                     $scope.itemArray=response;
                     $scope.displayItemData();
