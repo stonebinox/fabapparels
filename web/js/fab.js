@@ -275,7 +275,6 @@ app.controller("dashboard",function($scope,$http,$compile){
                             },
                             success: function(responseText){
                                 responseText=$.trim(responseText);
-                                console.log(responseText);
                                 if((validate(responseText))&&(responseText!="INVALID_PARAMETERS")){
                                     switch(responseText){
                                         default:
@@ -283,7 +282,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                                         break;
                                         case "ITEMS_ADDED":
                                         messageBox("Items Added","The items were added successfully!");
-                                        //refresh items
+                                        $scope.getInventoryItems();
                                         break;
                                     }
                                 }
