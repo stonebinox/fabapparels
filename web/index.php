@@ -192,7 +192,7 @@ $app->post("/api/addItems",function(Request $request) use($app){
         require("../classes/inventoryMaster.php");
         require("../classes/itemMaster.php");
         $item=new itemMaster;
-        $response=$item->addItems($request->get("inventory_id"),$app['session']->get("uid"),$request->get("price"),$request->get("quantity"),$request->get("discount"));
+        $response=$item->addItems($request->get("inventory_id"),$app['session']->get("uid"),$request->get("name"),$request->get("price"),$request->get("quantity"),$request->get("discount"));
         return $response;
     }
     return "INVALID_PARAMETERS";
