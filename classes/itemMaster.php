@@ -179,17 +179,17 @@ class itemMaster extends inventoryMaster
                 if(!empty($name))
                 {
                     $price=secure($price);
-                    if((!empty($price))&&(is_numeric($price))&&($price>=0))
+                    if((is_numeric($price))&&($price>=0))
                     {
                         $quantity=secure($quantity);
-                        if((!empty($quantity))&&(is_numeric($quantity))&&($quantity>0))
+                        if((is_numeric($quantity))&&($quantity>0))
                         {
                             $discount=secure($discount)   ;
                             if($discount=="zero")
                             {
                                 $discount=0;
                             }
-                            if((!empty($discount))&&(is_numeric($discount))&&($discount>=0))
+                            if((is_numeric($discount))&&($discount>=0))
                             {
                                 $app=$this->app;
                                 for($i=0;$i<$quantity;$i++)
