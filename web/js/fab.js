@@ -272,6 +272,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                             },
                             success: function(responseText){
                                 responseText=$.trim(responseText);
+                                console.log(responseText);
                                 if((validate(responseText))&&(responseText!="INVALID_PARAMETERS")){
                                     switch(responseText){
                                         default:

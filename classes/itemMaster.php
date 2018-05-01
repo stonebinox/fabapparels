@@ -165,5 +165,47 @@ class itemMaster extends inventoryMaster
             return "INVALID_SEARCH_TEXT";
         }
     }
+    function addItems($inventoryID,$userID,$name,$price=0,$quantity=0,$discount=0)
+    {
+        $inventoryID=secure($inventoryID);
+        inventoryMaster::__construct($inventoryID);
+        if($this->inventoryValid)
+        {
+            $userID=secure($userID);
+            userMaster::__construct($userID);
+            if($this->userValid)
+            {
+                $name=secure($name);
+                if(!empty($name))
+                {
+                    $price=secure($price);
+                    if((!empty($price))&&(is_numeric($price))&&($price>=0))
+                    {
+                        $quantity=secure($quantity);
+                        if((!empty($quantity))&&(is_numeric($quantity))&&($quantity>0))
+                        {
+                            $discount=secure($discount)   ;
+                            if((!empty($discount))&&(is_numeric($discount))&&($discount>=0))
+                            {
+                                $app=$this->app;
+                                for($i=0;$i<$quantity;$i++)
+                                {
+                                    $in="INSERT INTO item_master (timestamp,item_name,item_price,item_discount,user_master_iduser_master,inventory_master_idinventory_master) VALUES (NOW(),'$name','$price','$discount','$userID','$inventoryID')";
+                                    $in=$app['db']->executeQuery($in);
+                                }
+                                return "ITEMS_ADDED";
+                            }   
+                            return "INVALID_ITEM_DISCOUNT";
+                        }
+                        return "INVALID_ITEM_QUANTITY";
+                    }
+                    return "INVALID_ITEM_PRICE";
+                }
+                return "INVALID_ITEM_NAME";
+            }
+            return "INVALID_USER_ID";
+        }
+        return "INVALID_INVENTORY_ID";
+    }
 }
 ?>
