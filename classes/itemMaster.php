@@ -185,6 +185,10 @@ class itemMaster extends inventoryMaster
                         if((!empty($quantity))&&(is_numeric($quantity))&&($quantity>0))
                         {
                             $discount=secure($discount)   ;
+                            if($discount=="zero")
+                            {
+                                $discount=0;
+                            }
                             if((!empty($discount))&&(is_numeric($discount))&&($discount>=0))
                             {
                                 $app=$this->app;

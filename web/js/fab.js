@@ -255,6 +255,9 @@ app.controller("dashboard",function($scope,$http,$compile){
                     $("#itemquantity").parent().removeClass("has-error");
                     var discount=$.trim($("#discount").val());
                     if((validate(discount))&&(!isNaN(discount))&&(discount>=0)){
+                        if(discount==0){
+                            discount="zero";
+                        }
                         $("#discount").parent().removeClass("has-error");
                         $.ajax({
                             url: "api/addItems",
