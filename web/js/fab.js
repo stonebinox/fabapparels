@@ -295,7 +295,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                                         break;
                                         case "ITEMS_ADDED":
                                         messageBox("Items Added","The items were added successfully!");
-                                        $scope.getInventoryItems();
+                                        $scope.getInventoryItems($scope.inventory_id);
                                         break;
                                     }
                                 }
