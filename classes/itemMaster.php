@@ -100,7 +100,7 @@ class itemMaster extends inventoryMaster
     {
         $app=$this->app;
         $offset=secure($offset);
-        if((!empty($offset))&&(is_numeric($offset))&&($offset>=0))
+        if((is_numeric($offset))&&($offset>=0))
         {
             $im="SELECT iditem_master FROM item_master WHERE stat='1'";
             if(!empty($inventoryID))
