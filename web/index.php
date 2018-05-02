@@ -209,5 +209,17 @@ $app->get("/api/deleteItem/{itemID}",function($itemID) use($app){
     }
     return "INVALID_PARAMETERS";
 });
+$app->get("/api/deleteItems/{inventoryID}",function($inventoryID) use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/inventoryMaster.php");
+        require("../classes/itemMaster.php");
+        $item=new itemMaster;
+        $response=$item->deleteItems($inventoryID);
+        return $response;
+    }
+    return "INVALID_PARAMETERS";
+});
 $app->run();
 ?>
