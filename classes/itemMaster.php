@@ -103,7 +103,7 @@ class itemMaster extends inventoryMaster
         if((validate($offset))&&(is_numeric($offset))&&($offset>=0))
         {
             $im="SELECT iditem_master FROM item_master WHERE stat='1'";
-            if(validate($inventoryID))
+            if(!empty($inventoryID))
             {
                 inventoryMaster::__construct($inventoryID);
                 if($this->inventoryValid)
