@@ -236,7 +236,7 @@ class itemMaster extends inventoryMaster
         }
         return "INVALID_ITEM_ID";
     }
-    function deleteAll($inventoryID)
+    function deleteItems($inventoryID)
     {
         $app=$this->app;
         $inventoryID=secure($inventoryID);
