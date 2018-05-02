@@ -224,7 +224,7 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
     };
     $scope.displayItemData=function(){
-        var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="addItemsView()">Add items</button></div><div class="panel-body"><table class="table"><thead><tr><th><strong>Sl no</strong></th><th><strong>Name</strong></th><th><strong>Price</strong></th><th><strong>Discount</strong></th></thead><tbody>';
+        var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="addItemsView()">Add items</button></div><div class="panel-body"><table class="table"><thead><tr><th><strong>Sl no</strong></th><th><strong>Name</strong></th><th><strong>Price</strong></th><th><strong>Discount</strong></th><th><strong>Actions</strong></th></thead><tbody>';
         for(var i=0;i<$scope.itemArray.length;i++){
             var item=$scope.itemArray[i];
             var itemID=item.iditem_master;
@@ -234,7 +234,7 @@ app.controller("dashboard",function($scope,$http,$compile){
             var user=item.user_master_iduser_master;
             var userID=user.iduser_master;
             var userName=user.user_name;
-            text+='<tr id="item'+itemID+'"><td>'+(i+1)+'</td><td>'+itemName+'</td><td>'+itemPrice+'</td><td>'+itemDiscount+'</td></tr>';
+            text+='<tr id="item'+itemID+'"><td>'+(i+1)+'</td><td>'+itemName+'</td><td>'+itemPrice+'</td><td>'+itemDiscount+'</td><td><button type="button" class="btn btn-danger btn-sm">Delete</button></td></tr>';
         }
         text+='</tbody></table></div></div>';
         $("#itemdata").html(text);
