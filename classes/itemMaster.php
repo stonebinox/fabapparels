@@ -113,7 +113,6 @@ class itemMaster extends inventoryMaster
                 }
             }
             $im.=" ORDER BY iditem_master ASC LIMIT $offset,1000";
-            echo $im;
             $im=$app['db']->fetchAll($im);
             $itemArray=array();
             foreach($im as $item)
