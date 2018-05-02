@@ -224,8 +224,21 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
     };
     $scope.displayItemData=function(){
-        var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong></div><div class="panel-body"></div></div>';
+        var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="addItemsView()">Add items</button></div><div class="panel-body"><table class="table"><thead><tr><th><strong>Sl no</strong></th><th><strong>Name</strong></th><th><strong>Price</strong></th><th><strong>Discount</strong></th></thead><tbody>';
+        for(var i=0;i<$scope.itemArray.length;i++){
+            var item=$scope.itemArray[i];
+            var itemID=item.iditem_master;
+            var itemName=item.item_name;
+            var itemPrice=item.item_price;
+            var itemDiscount=item.item_discount;
+            var user=item.user_master_iduser_master;
+            var userID=user.iduser_master;
+            var userName=user.user_name;
+            text+='<tr><td>'+(i+1)+'</td><td>'+itemName+'</td><td>'+itemPrice+'</td><td>'+itemDiscount+'</td></tr>';
+        }
+        text+='</tbody></table></div></div>';
         $("#itemdata").html(text);
+        $compile("#itemdata")($scope);
     };
     $scope.addItemsView=function(){
         if(validate($scope.inventory_id)){
