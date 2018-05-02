@@ -211,7 +211,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                         messageBox("Problem","Something went wrong while getting items. This is the error we see: "+response);
                         break;
                         case "NO_ITEMS_FOUND":
-                        $("#itemdata").html('<div class="well"><button type="button" class="btn btn-primary" ng-click="addItemsView()">Add items</button><br><hr>No items added.</div>');
+                        $("#itemdata").html('<div class="well"><button type="button" class="btn btn-primary btn-sm" ng-click="addItemsView()">Add items</button><br><hr>No items added.</div>');
                         $compile("#itemdata")($scope);
                         break;
                     }
@@ -234,7 +234,7 @@ app.controller("dashboard",function($scope,$http,$compile){
             var user=item.user_master_iduser_master;
             var userID=user.iduser_master;
             var userName=user.user_name;
-            text+='<tr id="item'+itemID+'"><td>'+(i+1)+'</td><td>'+itemName+'</td><td>'+itemPrice+'</td><td>'+itemDiscount+'</td><td><button type="button" class="btn btn-danger btn-sm">Delete</button></td></tr>';
+            text+='<tr id="item'+itemID+'"><td>'+(i+1)+'</td><td>'+itemName+'</td><td>'+itemPrice+'</td><td>'+itemDiscount+'</td><td><button type="button" class="btn btn-danger btn-sm" ng-click="deleteItem('+itemID+')">Delete</button></td></tr>';
         }
         text+='</tbody></table></div></div>';
         $("#itemdata").html(text);
@@ -320,6 +320,30 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
         else{
             $("#itemname").parent().addClass("has-error");
+        }
+    };
+    $scope.deleteItem=function(itemID){
+        if((validate(itemID))&&(confirm("Are you sure you want to delete this item?"))){
+            $http.get("api/deleteItem/"+itemID)
+            .then(function success(response){
+                response=$.trim(response.data);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while trying to delete this item. Please try again later. This is the error we see: "+response);    
+                    break;
+                    case "INVALID_ITEM_ID":
+                    messageBox("Invalid Item","The item you are trying to delete is invalid or doesn't exist.");
+                    break;
+                    case "ITEM_DELETED":
+                    $scope.getInventoryItems($scope.inventory_id);
+                    break;
+                }
+            },
+            function error(response){
+                console.log(response);
+                messageBox("Problem","Something went wrong while trying to delete this item. Please try again later.");
+            }); 
         }
     };
 });

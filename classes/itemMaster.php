@@ -212,5 +212,29 @@ class itemMaster extends inventoryMaster
         }
         return "INVALID_INVENTORY_ID";
     }
+    function deleteItem()
+    {
+        if($this->itemValid)
+        {
+            $app=$this->app;
+            $itemID=$this->item_id;
+            $im="UPDATE item_master SET stat='0' WHERE iditem_master='$itemID'";
+            $im=$app['db']->executeUpdate($im);
+            return "ITEM_DELETED";
+        }
+        return "INVALID_ITEM_ID";
+    }
+    function sellItem()
+    {
+        if($this->itemValid)
+        {
+            $app=$this->app;
+            $itemID=$this->item_id;
+            $im="UPDATE item_master SET stat='2' WHERE iditem_master='$itemID'";
+            $im=$app['db']->executeUpdate($im);
+            return "ITEM_SOLD";
+        }
+        return "INVALID_ITEM_ID";
+    }
 }
 ?>
