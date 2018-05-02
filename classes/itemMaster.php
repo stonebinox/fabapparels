@@ -236,5 +236,24 @@ class itemMaster extends inventoryMaster
         }
         return "INVALID_ITEM_ID";
     }
+    function deleteAll($inventoryID)
+    {
+        $app=$this->app;
+        $inventoryID=secure($inventoryID);
+        inventoryMaster::__construct($inventoryID);
+        if($this->inventoryValid)
+        {
+            $im="SELECT iditem_master FROM item_master WHERE stat='1' AND inventory_master_idinventory_master='$inventoryID'";
+            $im=$app['db']->fetchAll($im);
+            foreach($im as $item)
+            {
+                $itemID=$item['iditem_master'];
+                $this->__construct($itemID);
+                $response=$this->deleteItem();
+            }
+            return "ITEMS_DELETED";
+        }
+        return "INVALID_INVENTORY_ID";
+    }
 }
 ?>

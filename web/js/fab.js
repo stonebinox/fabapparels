@@ -224,7 +224,7 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
     };
     $scope.displayItemData=function(){
-        var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="addItemsView()">Add items</button></div><div class="panel-body"><table class="table"><thead><tr><th><strong>Sl no</strong></th><th><strong>Name</strong></th><th><strong>Price</strong></th><th><strong>Discount</strong></th><th><strong>Actions</strong></th></thead><tbody>';
+        var text='<div class="panel panel-default"><div class="panel-heading"><strong>'+$scope.itemArray.length+' items</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="addItemsView()">Add items</button>&nbsp;<button type="button" class="btn btn-danger btn-sm" ng-click="deleteItems()">Delete all items</button></div><div class="panel-body"><table class="table"><thead><tr><th><strong>Sl no</strong></th><th><strong>Name</strong></th><th><strong>Price</strong></th><th><strong>Discount</strong></th><th><strong>Actions</strong></th></thead><tbody>';
         for(var i=0;i<$scope.itemArray.length;i++){
             var item=$scope.itemArray[i];
             var itemID=item.iditem_master;
@@ -344,6 +344,31 @@ app.controller("dashboard",function($scope,$http,$compile){
                 console.log(response);
                 messageBox("Problem","Something went wrong while trying to delete this item. Please try again later.");
             }); 
+        }
+    };
+    $scope.deleteItems=function(){
+        if(confirm("Are you sure you want to delete ALL items in this category?")){
+            $http.get("api/deleteItems/"+$scope.inventory_id)
+            .then(function success(response){
+                response=$.trim(response.data);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while trying to delete all items from this category. Please try again later. This is the error we see: "+response);
+                    break;
+                    case "INVALID_INVENTORY_ID":
+                    messageBox("Invalid Category","The category you are deleting from is invalid or doesn't.");
+                    break;
+                    case "ITEMS_DELETED":
+                    messageBox("Items Deleted","All items in this category have been deleted.");
+                    $scope.getInventoryItems($scope.inventory_id);
+                    break;
+                }
+            },
+            function error(response){
+                console.log(response);
+                messageBox("Problem","Something went wrong while trying to delete all items from this category. Please try again later.");
+            });
         }
     };
 });
