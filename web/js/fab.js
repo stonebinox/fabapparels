@@ -234,7 +234,7 @@ app.controller("dashboard",function($scope,$http,$compile){
             var user=item.user_master_iduser_master;
             var userID=user.iduser_master;
             var userName=user.user_name;
-            text+='<tr><td>'+(i+1)+'</td><td>'+itemName+'</td><td>'+itemPrice+'</td><td>'+itemDiscount+'</td></tr>';
+            text+='<tr id="item'+itemID+'"><td>'+(i+1)+'</td><td>'+itemName+'</td><td>'+itemPrice+'</td><td>'+itemDiscount+'</td></tr>';
         }
         text+='</tbody></table></div></div>';
         $("#itemdata").html(text);
