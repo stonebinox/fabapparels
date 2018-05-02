@@ -28,7 +28,7 @@ class itemMaster extends inventoryMaster
             $itemID=$this->item_id;
             $im="SELECT inventory_master_idinventory_master,user_master_iduser_master FROM item_master WHERE stat='1' AND iditem_master='$itemID'";
             $im=$app['db']->fetchAssoc($im);
-            if(validate($im))
+            if(!empty($im))
             {
                 $invID=$im['inventory_master_idinventory_master'];
                 inventoryMaster::__construct($invID);
@@ -68,7 +68,7 @@ class itemMaster extends inventoryMaster
             $itemID=$this->item_id;
             $im="SELECT * FROM item_master WHERE iditem_master='$itemID'";
             $im=$app['db']->fetchAssoc($im);
-            if(validate($im))
+            if(!empty($im))
             {
                 $inventoryID=$im['inventory_master_idinventory_master'];
                 inventoryMaster::__construct($inventoryID);
@@ -100,11 +100,12 @@ class itemMaster extends inventoryMaster
     {
         $app=$this->app;
         $offset=secure($offset);
-        if((validate($offset))&&(is_numeric($offset))&&($offset>=0))
+        if((!empty($offset))&&(is_numeric($offset))&&($offset>=0))
         {
             $im="SELECT iditem_master FROM item_master WHERE stat='1'";
             if(!empty($inventoryID))
             {
+                $inventoryID=secure($inventoryID);
                 inventoryMaster::__construct($inventoryID);
                 if($this->inventoryValid)
                 {
@@ -138,7 +139,7 @@ class itemMaster extends inventoryMaster
     function searchItem($text)
     {
         $text=trim(secure($text));
-        if(validate($text))
+        if(!empty($text))
         {
             $im="SELECT iditem_master FROM item_master WHERE stat='1' AND item_name='$text' ORDER BY item_name ASC";
             $app=$this->app;
