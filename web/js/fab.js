@@ -113,6 +113,7 @@ app.controller("dashboard",function($scope,$http,$compile){
         });
     };
     $scope.getInventoryTypes=function(){
+        $("#invtypes").html('<div class="text-center"><img src="images/ajax-loader.gif" width=40></div>')
         $http.get("api/getInventoryTypes")
         .then(function success(response){
             response=response.data;
@@ -377,5 +378,37 @@ app.controller("dashboard",function($scope,$http,$compile){
         var text='<form><div class="form-group"><label for="name">Name</label><input type="text" name="name" id="name" class="form-control" placeholder="Enter a valid name"></div><button type="button" class="btn btn-primary" ng-click="renameInventory('+inventoryID+')">Rename</button></form>';
         messageBox("Rename Inventory",text);
         $compile("#myModal")($scope);
+    };
+    $scope.renameInventory=function(inventoryID){
+        if(validate(inventoryID)){
+            var name=$.trim($("#name").val());
+            if(validate(name)){
+                $("#name").parent().removeClass("has-error");
+                $http.get("api/renameInventory?name="+name+"&inventory_id="+inventoryID)
+                .then(function success(response){
+                    response=response.data;
+                    switch(response){
+                        case "INVALID_PARAMETERS":
+                        default:
+                        messageBox("Problem","Something went wrong while renaming this inventory. Please try again later. This is the error we see: "+response);
+                        break;
+                        case "INVALID_INVENTORY_NAME":
+                        messageBox("Invalid Name","Please enter a valid name and try again.");
+                        break;
+                        case "INVENTORY_NAME_UPDATED":
+                        messageBox("Inventory Renamed","This inventory was renamed successfully.");
+                        $scope.getInventoryTypes();
+                        break;
+                    }
+                },
+                function error(response){
+                    console.log(response);
+                    messageBox("Problem","Something went wrong while renaming this inventory. Please try again later.");
+                });
+            }
+            else{
+                $("#name").parent().addClass("has-error");
+            }
+        }
     };
 });
