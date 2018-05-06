@@ -145,7 +145,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                 var inv=$scope.inventoryArray[i];
                 var invID=inv.idinventory_master;
                 var invName=inv.inventory_name;
-                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'</a>';
+                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'</a>&nbsp;&nbsp;<a href="javascript:void(0)"><span class="glyphicon glyphicon-pencil"></span></a>';
             }
             text+='</div>';
             $("#invtypes").html(text);
@@ -369,5 +369,10 @@ app.controller("dashboard",function($scope,$http,$compile){
                 messageBox("Problem","Something went wrong while trying to delete all items from this category. Please try again later.");
             });
         }
+    };
+    $scope.showRenameInventory=function(inventoryID){
+        var text='<form><div class="form-group"><label for="name">Name</label><input type="text" name="name" id="name" class="form-control" placeholder="Enter a valid name"></div><button type="button" class="btn btn-primary" ng-click="renameInventory('+inventoryID+')">Rename</button></form>';
+        messageBox("Rename Inventory",text);
+        $compile("#myModal")($scope);
     };
 });

@@ -104,5 +104,36 @@ class inventoryMaster extends userMaster
         }
         return "INVALID_INVENTORY_NAME";
     }
+    function renameInventory($name)
+    {
+        if($this->inventoryValid)
+        {
+            $app=$this->app;
+            $inventoryID=$this->inventory_id;
+            $name=secure($name);
+            if(!empty($name))
+            {
+                $name=trim(ucwords($name));
+                $up="UPDATE inventory_master SET inventory_name='$name' WHERE idinventory_master='$inventoryID'";
+                $up=$app['db']->executeUpdate($up);
+                return "INVENTORY_NAME_UPDATED";
+            }
+            return "INVALID_INVENTORY_NAME";
+        }
+        return "INVALID_INVENTORY_ID";
+    }
+    function deleteInventory()
+    {
+        if($this->inventoryValid)
+        {
+            $app=$this->app;
+            $inventoryID=$this->inventory_id;
+            $up="UPDATE inventory_master SET stat='0' WHERE idinventory_master='$inventoryID'";
+            $up=$app['db']->executeUpdate($up);
+            $this->inventoryValid=false;
+            return "INVENTORY_DELETED";
+        }
+        return "INVALID_INVENTORY_ID";
+    }
 }
 ?>

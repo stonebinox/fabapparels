@@ -221,5 +221,27 @@ $app->get("/api/deleteItems/{inventoryID}",function($inventoryID) use($app){
     }
     return "INVALID_PARAMETERS";
 });
+$app->get("/api/deleteInventory/{inventoryID}",function($inventoryID) use($app){
+    if($app['session']->get("uid"))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/inventoryMaster.php");
+        $inventory=new inventoryMaster($inventoryID);
+        $response=$inventory->deleteInventory();
+        return $response;
+    }
+    return "INVALID_PARAMETERS";
+});
+$app->get("/api/renameInventory",function(Request $request) use($app){
+    if(($app['session']->get("uid"))&&($request->get("name"))&&($request->get("inventory_id")))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/inventoryMaster.php");
+        $inventory=new inventoryMaster($request->get("inventory_id"));
+        $response=$inventory->renameInventory($request->get("name"));
+        return $response;
+    }
+    return "INVALID_PARAMETERS";
+});
 $app->run();
 ?>
