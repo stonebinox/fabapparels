@@ -146,7 +146,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                 var inv=$scope.inventoryArray[i];
                 var invID=inv.idinventory_master;
                 var invName=inv.inventory_name;
-                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Rename this inventory" data-placement="auto" ng-click="showRenameInventory('+invID+')"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" title="Delete this inventory" data-placement="auto" ng-click="deleteInventory('+invID+')"></span></a>';
+                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil text-success" data-toggle="tooltip" title="Rename this inventory" data-placement="auto" ng-click="showRenameInventory('+invID+')"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-remove text-danger" data-toggle="tooltip" title="Delete this inventory" data-placement="auto" ng-click="deleteInventory('+invID+')"></span></a>';
             }
             text+='</div>';
             $("#invtypes").html(text);
