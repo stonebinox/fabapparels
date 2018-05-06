@@ -199,7 +199,7 @@ app.controller("dashboard",function($scope,$http,$compile){
             $scope.inventory_id=inventoryID;
             $("#invtypes").find("a").removeClass("active");
             $("#"+inventoryID+"inv").addClass("active");
-            $("#itemdata").html('<div class="text-center"><img src="images/ajax-loader.gif" width=40></div>');
+            $("#itemdata").html('<div class="text-center"><img src="images/ajax-loader.gif" width=30></div>');
             $http.get("api/getItems/"+$scope.inventory_id)
             .then(function success(response){
                 response=response.data;
