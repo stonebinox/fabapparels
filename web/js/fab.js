@@ -145,11 +145,14 @@ app.controller("dashboard",function($scope,$http,$compile){
                 var inv=$scope.inventoryArray[i];
                 var invID=inv.idinventory_master;
                 var invName=inv.inventory_name;
-                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>';
+                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Rename this inventory" data-placement="auto" ng-click="showRenameInventory('+invID+')"></span></a>';
             }
             text+='</div>';
             $("#invtypes").html(text);
             $compile("#invtypes")($scope);
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
             $scope.getInventoryItems($scope.inventoryArray[0].idinventory_master);
         }
     };
