@@ -146,7 +146,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                 var inv=$scope.inventoryArray[i];
                 var invID=inv.idinventory_master;
                 var invName=inv.inventory_name;
-                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Rename this inventory" data-placement="auto" ng-click="showRenameInventory('+invID+')"></span></a>';
+                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Rename this inventory" data-placement="auto" ng-click="showRenameInventory('+invID+')"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" title="Delete this inventory" data-placement="auto" ng-click="deleteInventory('+invID+')"></span></a>';
             }
             text+='</div>';
             $("#invtypes").html(text);
@@ -410,6 +410,31 @@ app.controller("dashboard",function($scope,$http,$compile){
             else{
                 $("#name").parent().addClass("has-error");
             }
+        }
+    };
+    $scope.deleteInventory=function(inventoryID){
+        if((validate(inventoryID))&&(confirm("Are you sure you want to delete this inventory? This will remove all items in this inventory as well."))){
+            $http.get("api/deleteInventory/"+inventoryID)
+            .then(function success(response){
+                response=$.trim(response.data);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong when trying to delete this item. Please try again later. This is the error we see: "+response);
+                    break;
+                    case "INVALID_INVENTORY_ID":
+                    messageBox("Invalid Inventory","This inventory doesn't exist or is invalid.");
+                    break;
+                    case "INVENTORY_DELETED":
+                    messageBox("Inventory Deleted","The inventory was deleted successfully.");
+                    $scope.getInventoryTypes();
+                    break;
+                }
+            },
+            function error(response){
+                console.log(response);
+                messageBox("Problem","Something went wrong when trying to delete this item. Please try again later.");
+            });
         }
     };
 });

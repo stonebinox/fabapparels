@@ -88,7 +88,7 @@ class inventoryMaster extends userMaster
     }
     function addInventory($name)
     {
-        $name=ucwords(trim(secure($name)));
+        $name=ucwords(trim(strtolower(secure($name))));
         if(validate($name))
         {
             $app=$this->app;
@@ -113,7 +113,7 @@ class inventoryMaster extends userMaster
             $name=secure($name);
             if(!empty($name))
             {
-                $name=trim(ucwords($name));
+                $name=trim(ucwords(strtolower($name)));
                 $up="UPDATE inventory_master SET inventory_name='$name' WHERE idinventory_master='$inventoryID'";
                 $up=$app['db']->executeUpdate($up);
                 return "INVENTORY_NAME_UPDATED";
