@@ -1,0 +1,17 @@
+<div class="well" ng-init="getUser()">
+    <h3 class="text-center">Welcome, {{user.user_name}}!</h3>
+    <div class="text-center">
+        <div class="btn-group">
+            <button type="button" class="btn btn-info">+ New Bill</button>
+            <button type="button" class="btn btn-default" ng-click="logout()">Logout</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <div id="invtypes"></div>
+    </div>
+    <div class="col-sm-8">
+        <div id="itemdata"></div>
+    </div>
+</div>

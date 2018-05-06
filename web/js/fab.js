@@ -85,6 +85,9 @@ app.controller("dashboard",function($scope,$http,$compile){
             if($scope.userType==1){
                 $scope.loadInventoryDashboard();
             }
+            else if($scope.userType==2){
+                $scope.loadBillingDashboard();
+            }
         }
         else{
             window.location='logout';
@@ -92,6 +95,11 @@ app.controller("dashboard",function($scope,$http,$compile){
     };
     $scope.loadInventoryDashboard=function(){
         $("#dashboard").load("views/dashboard.html",function(){
+            $compile("#dashboard")($scope);
+        });
+    };
+    $scope.loadBillingDashboard=function(){
+        $("#dashboard").load("views/billing.html",function(){
             $compile("#dashboard")($scope);
         });
     };
