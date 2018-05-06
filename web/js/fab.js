@@ -145,7 +145,7 @@ app.controller("dashboard",function($scope,$http,$compile){
                 var inv=$scope.inventoryArray[i];
                 var invID=inv.idinventory_master;
                 var invName=inv.inventory_name;
-                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'</a>&nbsp;&nbsp;<a href="javascript:void(0)"><span class="glyphicon glyphicon-pencil"></span></a>';
+                text+='<a href="javascript:void(0)" class="list-group-item" ng-click="getInventoryItems('+invID+')" id="'+invID+'inv">'+invName+'&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></a>';
             }
             text+='</div>';
             $("#invtypes").html(text);
