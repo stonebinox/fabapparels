@@ -445,4 +445,9 @@ app.controller("dashboard",function($scope,$http,$compile){
             });
         }
     };
+    $scope.showAddBillForm=function(){
+        var text='<form><div class="form-group"><label for="cname">Customer mobile</label><input type="tel" class="form-control" name="cname" id="cname" placeholder="Valid mobile number" required></div></form>';
+        messageBox("Add Bill",text);
+        $compile("#myModal")($scope);
+    };
 });
