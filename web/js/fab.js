@@ -465,13 +465,13 @@ app.controller("dashboard",function($scope,$http,$compile){
         var layout=`<table class="table">
             <thead>
                 <tr>
-                    <th><td><strong>Sl no</td></th>
-                    <th><td><strong>Item ID</td></th>
-                    <th><td><strong>Item name</td></th>
-                    <th><td><strong>Category</td></th>
-                    <th><td><strong>Rate</td></th>
-                    <th><td><strong>Quantity</td></th>
-                    <th><td><strong>Amount</td></th>
+                    <th><td><strong>Sl no</strong></td></th>
+                    <th><td><strong>Item ID</strong></td></th>
+                    <th><td><strong>Item name</strong></td></th>
+                    <th><td><strong>Category</strong></td></th>
+                    <th><td><strong>Rate</strong></td></th>
+                    <th><td><strong>Quantity</strong></td></th>
+                    <th><td><strong>Amount</strong></td></th>
                 </tr>
             </thead>
             <tbody>`;
