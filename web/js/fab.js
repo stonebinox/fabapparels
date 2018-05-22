@@ -475,7 +475,16 @@ app.controller("dashboard",function($scope,$http,$compile){
                 </tr>
             </thead>
             <tbody>`;
-
+        if($scope.tempBillItems.length>0){
+            for(var i=0;i<$scope.tempBillItems.length;i++){
+                var item=$scope.tempBillItems[i];
+            }
+        }
+        else{
+            layout+=`<tr>
+                <td class="text-center" colspan=7>No items to display.</td>
+            </tr>`;
+        }
         layout+=`</tbody>
         </table>`;
         $("#billitems").html(layout);
