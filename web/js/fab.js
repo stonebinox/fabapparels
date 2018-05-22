@@ -99,7 +99,8 @@ app.controller("dashboard",function($scope,$http,$compile){
         });
     };
     $scope.loadBillingDashboard=function(){
-        $("#dashboard").load("views/billing.html",function(){
+        var dt=new Date().getTime();
+        $("#dashboard").load("views/billing.html?dt="+dt,function(){
             $compile("#dashboard")($scope);
         });
     };
