@@ -445,4 +445,38 @@ app.controller("dashboard",function($scope,$http,$compile){
             });
         }
     };
+    $scope.tempBillItems=[];
+    $scope.getAddBillView=function(){
+        var layout=`<form>
+            <div class="form-group">
+                <input type="text" class="form-control" name="itemsearch" id="itemsearch" placeholder="Enter some text to search">
+                <hr>
+                <div id="billsearch"></div>
+                <br>
+                <div id="billitems"></div>
+            </div>
+        </form>`;
+        messageBox("Add Bill", layout);
+        $compile("#myModal")($scope);
+        $scope.displayTempBillItems();
+    };
+    $scope.displayTempBillItems=function(){
+        var layout=`<table class="table">
+            <thead>
+                <tr>
+                    <th><td><strong>Sl no</td></th>
+                    <th><td><strong>Item ID</td></th>
+                    <th><td><strong>Item name</td></th>
+                    <th><td><strong>Category</td></th>
+                    <th><td><strong>Rate</td></th>
+                    <th><td><strong>Quantity</td></th>
+                    <th><td><strong>Amount</td></th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        layout+=`</tbody>
+        </table>`;
+        $("#billitems").html(layout);
+    }
 });
