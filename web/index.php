@@ -243,5 +243,21 @@ $app->get("/api/renameInventory",function(Request $request) use($app){
     }
     return "INVALID_PARAMETERS";
 });
+$app->get("/api/searchItem",function(Request $request) use($app){
+    if(($app['session']->get("uid"))&&($request->get("seaech")))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/inventoryMaster.php");
+        require("../classes/itemMaster.php");
+        $item=new itemMaster;
+        $response=$item->searchItem($request->get("search"));
+        if(is_array($response))
+        {
+            return json_encode($response);
+        }
+        return $response;
+    }   
+    return "INVALID_PARAMETERS";
+});
 $app->run();
 ?>

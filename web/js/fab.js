@@ -447,10 +447,11 @@ app.controller("dashboard",function($scope,$http,$compile){
         }
     };
     $scope.tempBillItems=[];
+    $scope.itemSearch="";
     $scope.getAddBillView=function(){
         var layout=`<form>
-            <div class="form-group">
-                <input type="text" class="form-control" name="itemsearch" id="itemsearch" placeholder="Enter some text to search">
+            <div class="form-group has-success">
+                <input type="text" class="form-control" name="itemsearch" id="itemsearch" placeholder="Enter some text to search" ng-model="itemSearch" ng-change="searchItem()">
                 <hr>
                 <div id="billsearch"></div>
                 <br>
@@ -488,5 +489,20 @@ app.controller("dashboard",function($scope,$http,$compile){
         layout+=`</tbody>
         </table>`;
         $("#billitems").html(layout);
-    }
+    };
+    $scope.searchItem=function(){
+        if($scope.searchItem.length>0){
+            $http.get("api/searchItem?search="+$scope.searchItem)
+            .then(function success(response){
+
+            },
+            function error(response){
+                console.log(response);
+                
+            });
+        }
+        else{
+            $("#billsearch").html('');
+        }
+    };
 });
