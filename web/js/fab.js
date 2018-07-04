@@ -494,7 +494,7 @@ app.controller("dashboard",function($scope,$http,$compile){
         if($scope.searchItem.length>0){
             $http.get("api/searchItem?search="+$scope.searchItem)
             .then(function success(response){
-
+                
             },
             function error(response){
                 console.log(response);
